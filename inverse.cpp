@@ -20,7 +20,6 @@ lapack_int mat_inv(double *A, unsigned n, double X, double Y, int ID, int POINT)
                         if((i+1)%n == 0){std::cout << std::endl;}
                 }
                 exit(0);
-                return ret;
         }
         ret = LAPACKE_dgetri(LAPACK_COL_MAJOR,n,A,n,ipiv);
 

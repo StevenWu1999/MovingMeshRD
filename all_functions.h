@@ -1,8 +1,4 @@
 
-//#ifndef RD_ALL_FUNCTIONS_H
-//#define RD_ALL_FUNCTIONS_H
-//
-//#endif //RD_ALL_FUNCTIONS_H
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -10,10 +6,14 @@
 #include "triangle2D.h"
 //source2D.cpp
 void sources(std::vector<VERTEX>&, double, int);
+void plummer_gravity(std::vector<VERTEX>&, double, int);
+void direct_gravity(std::vector<VERTEX>&, double, int);
+
 //timestep.cpp
 void drift_update_half(int, int, double, double, std::vector<TRIANGLE> &);
+void jump_update_half(int, int, double, double, std::vector<TRIANGLE> &);
 void drift_update(int, int, double, double, std::vector<TRIANGLE> &);
-void reset_tbins(int, int, int, int, double &, std::vector<TRIANGLE>&, std::vector<VERTEX> &);
+void reset_tbins(double, double, int, int, double &, std::vector<TRIANGLE>&, std::vector<VERTEX> &);
 
 //io2D.cpp
 void open_snap(std::ofstream &, int);
@@ -25,6 +25,7 @@ int cgal_read_positions_header(std::ifstream &);
 int cgal_read_triangles_header(std::ifstream &);
 VERTEX cgal_read_positions_line(std::ifstream &);
 TRIANGLE cgal_read_triangles_line(std::ifstream &, std::vector<VERTEX> &, int);
+
 //setup2D.cpp
 double F(double);
 double G(double);

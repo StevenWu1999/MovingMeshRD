@@ -249,7 +249,6 @@ public:
                         // std::cout << ID << "\tPosition =\t" << X << "\t" << Y << "\tSPECIFIC_ENERGY =\t" << U_VARIABLES[3] << std::endl;
                         // exit(0);
                 }
-                return ;
         }
         
         void check_values_half(){
@@ -271,7 +270,6 @@ public:
                         // std::cout << ID << "\tPosition =\t" << X << "\t" << Y << "\tSPECIFIC_ENERGY_HALF =\t" << U_HALF[3] << std::endl;
                         // exit(0);
                 }
-                return ;
         }
 
         // calculate min timestep this cell requires

@@ -25,6 +25,7 @@
 #include <iostream>
 #include "base.h"
 #include "inverse.h"
+using namespace std;
 #pragma once
 
 class TRIANGLE{
@@ -534,14 +535,13 @@ public:
                 }
 
 #endif
-                return ;
+
         }
 
         void pass_update_half(){
                 VERTEX_0->update_du_half(DU0_HALF);
                 VERTEX_1->update_du_half(DU1_HALF);
                 VERTEX_2->update_du_half(DU2_HALF);
-                return ;
         }
 
         //**********************************************************************************************************************
@@ -988,14 +988,12 @@ public:
                 }
 #endif
 
-                return ;
         }
 
         void pass_update(){
                 VERTEX_0->update_du(DU0);
                 VERTEX_1->update_du(DU1);
                 VERTEX_2->update_du(DU2);
-                return ;
         }
 
         // Returns Roe average of left and right states
@@ -1007,7 +1005,6 @@ public:
 
         void setup_normals(){
                 // Calculate normals (just in first timestep for static grid)
-                int m;
 
                 setup_positions();
 
@@ -1055,22 +1052,21 @@ public:
                 
                 calculate_normals(X_MOD,Y_MOD);
 
-                return ;
 
         }
 
-        void calculate_normals(double X[3],double Y[3]){
+        void calculate_normals(double X_input[3],double Y_input[3]){
                 int i;
                 double PERP[3][2];
 
-                PERP[0][0] = (Y[1] - Y[2]);
-                PERP[0][1] = (X[2] - X[1]);
+                PERP[0][0] = (Y_input[1] - Y_input[2]);
+                PERP[0][1] = (X_input[2] - X_input[1]);
 
-                PERP[1][0] = (Y[2] - Y[0]);
-                PERP[1][1] = (X[0] - X[2]);
+                PERP[1][0] = (Y_input[2] - Y_input[0]);
+                PERP[1][1] = (X_input[0] - X_input[2]);
 
-                PERP[2][0] = (Y[0] - Y[1]);
-                PERP[2][1] = (X[1] - X[0]);
+                PERP[2][0] = (Y_input[0] - Y_input[1]);
+                PERP[2][1] = (X_input[1] - X_input[0]);
 
                 // calculate area of triangle and pass 1/3 to each vertex for dual
 
@@ -1093,7 +1089,6 @@ public:
                         NORMAL[i][1] = PERP[i][1]/MAG[i];
                 }
 
-                return ;
         }
 
         void calculate_len_vel_contribution(){
@@ -1133,7 +1128,6 @@ public:
                 VERTEX_1->update_len_vel_sum(CONT);
                 VERTEX_2->update_len_vel_sum(CONT);
 
-                return ;
         }
 
 #ifdef DRIFT_SHELL
@@ -1155,13 +1149,15 @@ public:
 #endif
 
         void reorder_vertices(){
+
+//              std::cout<<"reordering !!!!!!"<<std::endl;
+//              Warning: X_MOD, Y_MOD haven't been reordered!
                 VERTEX *TEMP_VERTEX;
 
                 TEMP_VERTEX = VERTEX_1;
                 VERTEX_1 = VERTEX_2;
                 VERTEX_2 = TEMP_VERTEX;
 
-                return;
         }
 
 };
