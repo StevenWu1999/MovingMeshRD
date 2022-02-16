@@ -4,8 +4,9 @@ IO routines to write simple ASCII output for python plotting
 */
 #include <iostream>
 #include <fstream>
-#include <vertex2D.h>
-#include <triangle2D.h>
+#include <iomanip>
+#include "vertex2D.h"
+#include "triangle2D.h"
 #include "all_functions.h"
 
 void open_snap(std::ofstream &SNAPFILE, int i){

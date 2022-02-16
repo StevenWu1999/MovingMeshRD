@@ -8,7 +8,7 @@
 // #define SODY
 // #define SINEX
 // #define SEDOV
-#define GAUSSX
+// #define GAUSSX
 // #define GAUSSY
 // #define UNIFORM
 // #define NOH
@@ -18,6 +18,7 @@
 // #define KHYSMOOTH
 // #define BLOB
 // #define DF
+#define GRESHO  //(https://epubs.siam.org/doi/pdf/10.1137/S1064827502402120)
 
 //-----------------------------------------
 /* set dimensionality */
@@ -28,7 +29,7 @@
 //-----------------------------------------
 /* set umber of snapshots */
 //-----------------------------------------
-#define N_SNAP 20
+#define N_SNAP 100
 
 //-----------------------------------------
 /* debug flag for debug output */
@@ -59,9 +60,9 @@
 /* define flag for timesteps */
 //-----------------------------------------
 // #define FIXED_DT
-// #define DRIFT
+#define DRIFT
 //#define DRIFT_SHELL
-#define JUMP
+//#define JUMP
 #include<cmath>
 #include<string>
 
@@ -77,19 +78,19 @@ const int MAX_TBIN = pow(2,N_TBINS);
 //-----------------------------------------
 /* define distribution scheme */
 //-----------------------------------------
-// #define LDA_SCHEME
-#define N_SCHEME
-// #define BLENDED
+#define LDA_SCHEME
+//#define N_SCHEME
+//#define BLENDED
 
 //-----------------------------------------
 /* set order of scheme (none for 2nd order) */
 //-----------------------------------------
-//#define FIRST_ORDER
+#define FIRST_ORDER
 
 // #define SELF_GRAVITY // !!! NOT PERIODIC !!!
 // #define ANALYTIC_GRAVITY
-// #define PARA_RES
-// #define PARA_UP
+#define PARA_RES
+#define PARA_UP
 
 const double GRAV = 6.67e-11;
 const double MSOLAR = 1.989e+30;
@@ -228,6 +229,14 @@ const double GAMMA = 5.0/3.0;
 const double SIDE_LENGTH_X = 10.0;
 const double SIDE_LENGTH_Y = 10.0;
 const double MACH = 0.0;
+#endif
+
+#ifdef GRESHO
+const double CFL = 0.2;
+const double T_TOT = 5.0;
+const double GAMMA = 5.0/3.0;
+const double SIDE_LENGTH_X = 2.0;
+const double SIDE_LENGTH_Y = 2.0;
 #endif
 
 const double GAMMA_1 = GAMMA - 1.0;

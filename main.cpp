@@ -122,7 +122,7 @@ int main(int ARGC, char *ARGV[]){
 
         printf("Reading CGAL vertex positions ...");
 
-        CGAL_FILE_NAME = "Delaunay2D.txt";
+        CGAL_FILE_NAME = "Delaunay2D_x0-2-128_y0-2-128.txt";
         CGAL_FILE.open(CGAL_FILE_NAME);
         N_POINTS = cgal_read_positions_header(CGAL_FILE);
 

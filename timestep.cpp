@@ -4,6 +4,9 @@
 
 void drift_update_half(int TBIN_CURRENT, int N_TRIANG, double T, double DT, std::vector<TRIANGLE> &RAND_MESH){
         int TBIN;
+#ifdef PARA_RES
+        #pragma omp parallel for
+#endif
         for(int j=0;j<N_TRIANG;++j){                                                                         // loop over all triangles in MESH
                 TBIN = RAND_MESH[j].get_tbin();
                 if(TBIN_CURRENT % TBIN == 0){
@@ -74,6 +77,10 @@ void jump_update_half(int TBIN_CURRENT, int N_TRIANG, double T, double DT, std::
 
 void drift_update(int TBIN_CURRENT, int N_TRIANG, double T, double DT, std::vector<TRIANGLE> &RAND_MESH){
         int TBIN;
+
+#ifdef PARA_RES
+        #pragma omp parallel for
+#endif
         for(int j=0;j<N_TRIANG;++j){                                                                         // loop over all triangles in MESH
                 TBIN = RAND_MESH[j].get_tbin();
                 if(TBIN_CURRENT % TBIN == 0){
