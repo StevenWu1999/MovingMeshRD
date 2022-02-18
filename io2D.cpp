@@ -10,12 +10,12 @@ IO routines to write simple ASCII output for python plotting
 #include "all_functions.h"
 
 void open_snap(std::ofstream &SNAPFILE, int i){
-        SNAPFILE.open(OUT_DIR+"snapshot_"+std::to_string(i)+".txt");
+        SNAPFILE.open(OUT_DIR+"/snapshot_"+std::to_string(i)+".txt");
         return;
 }
 
 void open_active(std::ofstream &SNAPFILE, int i){
-        SNAPFILE.open("output/active_"+std::to_string(i)+".txt");
+        SNAPFILE.open(OUT_DIR+"/active_"+std::to_string(i)+".txt");
         return;
 }
 

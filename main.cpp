@@ -6,8 +6,11 @@
 #include <vector>
 #include <cstdlib>
 #include <stdio.h>
-#include <omp.h> 
-
+#include <omp.h>
+#include <chrono>
+#include <ctime>
+#include <filesystem>
+#include <exception>
 #include "constants.h"
 #include "all_functions.h"
 #ifdef TWO_D
@@ -18,11 +21,16 @@
     int POINT_CHECK = 0;
 #endif
 //using namespace std;
+namespace fs = std::filesystem;
 
 int main(int ARGC, char *ARGV[]){
         /*
         Setup and run simulation from input file constants.h, using precalculated triangulation
         */
+        auto program_start = std::chrono::system_clock::now();
+        std::time_t program_start_time = std::chrono::system_clock::to_time_t(program_start);
+        std::cout<<"start computation at "<<std::ctime(&program_start_time);
+
         int i, j, l = 0, m;                                        // ******* declare variables and vectors ******
         int SNAP_ID = 0;
         double DT, T = 0.0;                                        //
@@ -64,6 +72,20 @@ int main(int ARGC, char *ARGV[]){
 #endif
 
         printf("Building vertices and mesh\n");
+
+
+        fs::path sourceFile = "constants.h";
+        fs::path targetParent = OUT_DIR;
+        auto target = targetParent / sourceFile.filename();
+        try // If you want to avoid exception handling, then use the error code overload of the following functions.
+        {
+            fs::create_directories(targetParent); // Recursively create target directory if not existing.
+            fs::copy_file(sourceFile, target, fs::copy_options::overwrite_existing);
+        }
+        catch (std::exception& e) // Not using fs::filesystem_error since std::bad_alloc can throw too.
+        {
+            std::cout << e.what();
+        }
 
         std::ofstream LOGFILE;
         LOGFILE << std::setprecision(12);
@@ -114,7 +136,6 @@ int main(int ARGC, char *ARGV[]){
 #endif
 #ifdef CGAL_IC
         int N_POINTS, N_TRIANG;
-        std::string   CGAL_FILE_NAME;
         std::ifstream CGAL_FILE;
 
         /****** Setup vertices ******/
@@ -122,7 +143,6 @@ int main(int ARGC, char *ARGV[]){
 
         printf("Reading CGAL vertex positions ...");
 
-        CGAL_FILE_NAME = "Delaunay2D_x0-2-128_y0-2-128.txt";
         CGAL_FILE.open(CGAL_FILE_NAME);
         N_POINTS = cgal_read_positions_header(CGAL_FILE);
 
@@ -298,6 +318,11 @@ int main(int ARGC, char *ARGV[]){
 
         write_snap(RAND_POINTS,T,DT,N_POINTS,SNAP_ID,LOGFILE);
 
+        auto program_end = std::chrono::system_clock::now();
+        std::time_t program_end_time = std::chrono::system_clock::to_time_t(program_end);
+        std::cout<<"finish computation at "<<std::ctime(&program_end_time);
+        std::chrono::duration<double> elapsed_seconds = program_end-program_start;
+        std::cout<<"elapsed time: " << elapsed_seconds.count() << "s\n";
 
         return 0;
 }
