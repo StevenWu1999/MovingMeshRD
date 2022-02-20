@@ -19,18 +19,18 @@ find_package(OpenMP REQUIRED)
 #endif()
 
 add_executable(rd
-        base.cpp
-        constants.h
-        inverse.cpp
-        io2D.cpp
-        main.cpp
-        setup2D.cpp
-        source2D.cpp
-        timestep.cpp
-        triangle2D.h
-        vertex2D.h
-        all_functions.h
-        base.h
-        inverse.h)
+        src/base.cpp
+        src/constants.h
+        src/inverse.cpp
+        src/io2D.cpp
+        src/main.cpp
+        src/setup2D.cpp
+        src/source2D.cpp
+        src/timestep.cpp
+        src/triangle2D.h
+        src/vertex2D.h
+        src/all_functions.h
+        src/base.h
+        src/inverse.h)
 target_link_libraries(rd ${OpenBLAS_LIBRARIES} OpenMP::OpenMP_CXX)
 

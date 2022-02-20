@@ -233,7 +233,7 @@ const double MACH = 0.0;
 
 #ifdef GRESHO
 const double CFL = 0.2;
-const double T_TOT = 0.05;
+const double T_TOT = 5.0;
 const double GAMMA = 5.0/3.0;
 const double SIDE_LENGTH_X = 2.0;
 const double SIDE_LENGTH_Y = 2.0;
