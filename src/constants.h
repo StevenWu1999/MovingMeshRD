@@ -13,13 +13,13 @@
 // #define GAUSSY
 // #define UNIFORM
 // #define NOH
-// #define KHX
+#define KHX
 // #define KHY
 // #define KHXSMOOTH
 // #define KHYSMOOTH
 // #define BLOB
 // #define DF
-#define GRESHO  //(https://epubs.siam.org/doi/pdf/10.1137/S1064827502402120)
+// #define GRESHO  //(https://epubs.siam.org/doi/pdf/10.1137/S1064827502402120)
 
 //-----------------------------------------
 /* set dimensionality */
@@ -30,7 +30,7 @@
 //-----------------------------------------
 /* set umber of snapshots */
 //-----------------------------------------
-#define N_SNAP 20
+#define N_SNAP 40
 
 //-----------------------------------------
 /* debug flag for debug output */
@@ -48,7 +48,7 @@
 //-----------------------------------------
 // #define QHULL_IC
 #define CGAL_IC
-const std::string CGAL_FILE_NAME = "triangulation_files/Delaunay2D_x0-2-128_y0-2-128.txt";
+const std::string CGAL_FILE_NAME = "triangulation_files/Delaunay2D_x0-1-64_y0-1-64.txt";
 
 //-----------------------------------------
 /* define boundar  y conditions (none for periodic) */
@@ -79,7 +79,7 @@ const int MAX_TBIN = pow(2,N_TBINS);
 /* define distribution scheme */
 //-----------------------------------------
 #define LDA_SCHEME
-//#define N_SCHEME
+// #define N_SCHEME
 //#define BLENDED
 
 //-----------------------------------------
@@ -98,7 +98,7 @@ const double MSOLAR = 1.989e+30;
 const double M_LIM = 0.0001;    // change for different tests
 const double E_LIM = 0.0001;
 
-const std::string OUT_DIR = "output";
+const std::string OUT_DIR = "output_KHX_LDA1_64";
 const std::string LOG_DIR = OUT_DIR + "/log.txt";
 
 // Sod Shock Tube (Varied in X)
@@ -233,7 +233,8 @@ const double MACH = 0.0;
 
 #ifdef GRESHO
 const double CFL = 0.2;
-const double T_TOT = 5.0;
+const double p0 = 0.3125;
+const double T_TOT = 10.0;
 const double GAMMA = 5.0/3.0;
 const double SIDE_LENGTH_X = 2.0;
 const double SIDE_LENGTH_Y = 2.0;

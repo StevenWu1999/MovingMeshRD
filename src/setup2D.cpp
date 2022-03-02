@@ -279,16 +279,17 @@ VERTEX setup_vertex(double X, double Y){
 
         double VEL_PHI, PRESSURE;
         if (0.0 <= R and R < 0.2){
-            VEL_PHI = 5.0*R; PRESSURE = 5.0 + 25.0/2.0*R*R;
+            VEL_PHI = 5.0*R; PRESSURE = p0 + 25.0/2.0*R*R;
         } else if (0.2 <= R and R < 0.4){
             VEL_PHI = 2.0 - 5.0*R;
-            PRESSURE = 9.0 - 4.0*log(0.2) + 25.0/2.0*R*R - 20.0*R + 4.0*log(R);
+            PRESSURE = p0 + 4.0 - 4.0*log(0.2) + 25.0/2.0*R*R - 20.0*R + 4.0*log(R);
         }else{
-            VEL_PHI = 0.0; PRESSURE = 3.0 + 4.0*log(2.0);
+            VEL_PHI = 0.0; PRESSURE = p0 - 2.0 + 4.0*log(2.0);
         }
-        VEL_PHI = -VEL_PHI; //clockwise
+        //VEL_PHI = -VEL_PHI; //clockwise
+        //double X_VELOCITY = -VEL_PHI*SIN_PHI - 0.00000001;
 
-        double X_VELOCITY = -VEL_PHI*SIN_PHI - 0.00000001;
+        double X_VELOCITY = -VEL_PHI*SIN_PHI + 0.00000001;
         double Y_VELOCITY = VEL_PHI*COS_PHI;
 
         NEW_VERTEX.set_mass_density(RHO_0);

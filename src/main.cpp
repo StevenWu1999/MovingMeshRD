@@ -74,7 +74,18 @@ int main(int ARGC, char *ARGV[]){
         printf("Building vertices and mesh\n");
 
 
-        fs::path sourceFile = "constants.h";
+#ifdef PARA_RES
+        omp_set_dynamic(0);
+        omp_set_num_threads(8);
+#pragma omp parallel
+        {
+            int thread_ID = omp_get_num_threads();
+            cout<<"number of threads: "<<thread_ID<<endl;
+        }
+#endif
+
+
+        fs::path sourceFile = "src/constants.h";
         fs::path targetParent = OUT_DIR;
         auto target = targetParent / sourceFile.filename();
         try // If you want to avoid exception handling, then use the error code overload of the following functions.
