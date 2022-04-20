@@ -1,7 +1,7 @@
 #ifndef RD_constants_H
 #define RD_constants_H
 #include <string>
-#include<cmath>
+#include <cmath>
 //-----------------------------------------
 /* choose hydro test */
 //-----------------------------------------
@@ -9,11 +9,11 @@
 // #define SODY
 // #define SINEX
 // #define SEDOV
-// #define GAUSSX
+#define GAUSSX
 // #define GAUSSY
 // #define UNIFORM
 // #define NOH
-#define KHX
+// #define KHX
 // #define KHY
 // #define KHXSMOOTH
 // #define KHYSMOOTH
@@ -42,7 +42,6 @@
 //-----------------------------------------
 #define READ_IC           // doesn't work yet
 
-
 //-----------------------------------------
 /* define flag for using either QHULL or CGAL triangulation */
 //-----------------------------------------
@@ -50,8 +49,12 @@
 #define CGAL_IC
 const std::string CGAL_FILE_NAME = "triangulation_files/Delaunay2D_x0-1-64_y0-1-64.txt";
 
+#define GENERATE_MESH  //not used
+#define UNIFORMIC //not used
+
+
 //-----------------------------------------
-/* define boundar  y conditions (none for periodic) */
+/* define boundary conditions (none for periodic) */
 //-----------------------------------------
 // #define CLOSED_BOUNDARY
 #define PERIODIC_BOUNDARY
@@ -59,10 +62,15 @@ const std::string CGAL_FILE_NAME = "triangulation_files/Delaunay2D_x0-1-64_y0-1-
 // #define REFLECTIVE_BOUNDARY        // doesn't work yet
 
 //-----------------------------------------
+/* define moving mesh */
+//-----------------------------------------
+#define MOVING_MESH
+
+//-----------------------------------------
 /* define flag for timesteps */
 //-----------------------------------------
 // #define FIXED_DT
-#define DRIFT
+// #define DRIFT
 //#define DRIFT_SHELL
 //#define JUMP
 
@@ -80,9 +88,10 @@ const int MAX_TBIN = pow(2,N_TBINS);
 //-----------------------------------------
 #define LDA_SCHEME
 // #define N_SCHEME
-//#define BLENDED
+// #define BLENDED
 
 //-----------------------------------------
+//
 /* set order of scheme (none for 2nd order) */
 //-----------------------------------------
 #define FIRST_ORDER
@@ -98,7 +107,9 @@ const double MSOLAR = 1.989e+30;
 const double M_LIM = 0.0001;    // change for different tests
 const double E_LIM = 0.0001;
 
-const std::string OUT_DIR = "output_KHX_LDA1_64";
+const std::string OUT_DIR = "ALE_GaussX_LDA1_64_sigma1.5";
+//const std::string OUT_DIR = "ALE_GaussX_LDA1_64_sigma0";
+//const std::string OUT_DIR = "output_GaussX_LDA1_64";
 const std::string LOG_DIR = OUT_DIR + "/log.txt";
 
 // Sod Shock Tube (Varied in X)
@@ -232,7 +243,7 @@ const double MACH = 0.0;
 #endif
 
 #ifdef GRESHO
-const double CFL = 0.2;
+const double CFL = 0.4;
 const double p0 = 0.3125;
 const double T_TOT = 10.0;
 const double GAMMA = 5.0/3.0;

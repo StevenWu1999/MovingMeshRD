@@ -58,6 +58,32 @@ void write_active(std::vector<TRIANGLE> MESH, int N_TRIANG, int SNAP_ID, int TBI
         }
 }
 
+// write mesh velocity in the future
+void write_mesh(std::vector<VERTEX> POINTS, std::vector<TRIANGLE> MESH, double T, int N_POINTS, int N_TRIANG, int SNAP_ID){
+        std::ofstream SNAPFILE;
+        SNAPFILE.open(OUT_DIR+"/mesh_"+std::to_string(SNAP_ID)+".txt");
+        SNAPFILE << "output: time, vertices (ID, X, Y, sigmaX, sigmaY), triangles (ID of vertex0, 1, 2,  is_boundary)."<<std::endl;
+        SNAPFILE << "Time: "<<T<<std::endl;
+        SNAPFILE << "Number of vertices: "<< N_POINTS <<std::endl;
+        for(int i=0;i<N_POINTS;++i){
+            // write Point ID, X, Y
+            SNAPFILE << POINTS[i].get_id() << "\t" << POINTS[i].get_x() << "\t" << POINTS[i].get_y() <<  "\t"
+            << POINTS[i].get_sigma_x() << "\t" << POINTS[i].get_sigma_y() << std::endl;
+        }
+        SNAPFILE << std::endl;
+        SNAPFILE << "--------------------------------------"<<std::endl;
+        SNAPFILE << std::endl;
+        SNAPFILE << "Number of triangles: "<<N_TRIANG<<std::endl;
+        for(int j=0;j<N_TRIANG;++j){
+            int ID_0 = MESH[j].get_vertex_0()->get_id();
+            int ID_1 = MESH[j].get_vertex_1()->get_id();
+            int ID_2 = MESH[j].get_vertex_2()->get_id();
+
+            SNAPFILE <<ID_0<<"\t" <<ID_1<<"\t" <<ID_2<<"\t" << MESH[j].get_boundary()<<std::endl;
+        }
+        SNAPFILE.close();
+}
+
 void read_parameter_file(int ARGC, char *ARGV[]){
         printf("Parameter file = %s\n", ARGV[1]);
 }
@@ -185,26 +211,26 @@ TRIANGLE cgal_read_triangles_line(std::ifstream &CGAL_FILE, std::vector<VERTEX> 
 
         // std::cout << POINTS[VERT0].get_x() << "\t" << POINTS[VERT1].get_x() << "\t" << POINTS[VERT2].get_x() << std::endl;
 
-        double X0,X1,X2,Y0,Y1,Y2;
+//        double X0,X1,X2,Y0,Y1,Y2;
 
         // check if boundary triangle
 
-        X0 = POINTS[VERT0].get_x();
-        X1 = POINTS[VERT1].get_x();
-        X2 = POINTS[VERT2].get_x();
-
-        Y0 = POINTS[VERT0].get_y();
-        Y1 = POINTS[VERT1].get_y();
-        Y2 = POINTS[VERT2].get_y();
-
-        if(abs(X0 - X1) > 0.5*SIDE_LENGTH_X or abs(X0 - X2) > 0.5*SIDE_LENGTH_X or abs(X1 - X2) > 0.5*SIDE_LENGTH_X or
-           abs(Y0 - Y1) > 0.5*SIDE_LENGTH_Y or abs(Y0 - Y2) > 0.5*SIDE_LENGTH_Y or abs(Y1 - Y2) > 0.5*SIDE_LENGTH_Y){
-                NEW_TRIANGLE.set_boundary(1);
-        }else{
-                NEW_TRIANGLE.set_boundary(0);
-        } 
+//        X0 = POINTS[VERT0].get_x();
+//        X1 = POINTS[VERT1].get_x();
+//        X2 = POINTS[VERT2].get_x();
+//
+//        Y0 = POINTS[VERT0].get_y();
+//        Y1 = POINTS[VERT1].get_y();
+//        Y2 = POINTS[VERT2].get_y();
+//
+//        if(abs(X0 - X1) > 0.5*SIDE_LENGTH_X or abs(X0 - X2) > 0.5*SIDE_LENGTH_X or abs(X1 - X2) > 0.5*SIDE_LENGTH_X or
+//           abs(Y0 - Y1) > 0.5*SIDE_LENGTH_Y or abs(Y0 - Y2) > 0.5*SIDE_LENGTH_Y or abs(Y1 - Y2) > 0.5*SIDE_LENGTH_Y){
+//                NEW_TRIANGLE.set_boundary(1);
+//        }else{
+//                NEW_TRIANGLE.set_boundary(0);
+//        }
         
-        NEW_TRIANGLE.setup_normals();
+        NEW_TRIANGLE.setup_positions_area();
 
         return NEW_TRIANGLE;
 }
